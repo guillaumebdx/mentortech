@@ -6,7 +6,12 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize.js';
 import './styles/app.scss';
-
 // start the Stimulus application
 import './bootstrap';
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+});
