@@ -3,7 +3,6 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    {% include 'component/_navbar.html.twig' %}
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
             <h1 class="header center orange-text">MentorTech</h1>
@@ -11,7 +10,7 @@
                 <h5 class="header col s12 light">Apprenez le web en autonomie et avec l'appui de mentors</h5>
             </div>
             <div class="row center">
-                <a href="" id="download-button" class="btn-large waves-effect waves-light orange">Je m'inscris !</a>
+                <a href="{{ path('app_register') }}" id="download-button" class="btn-large waves-effect waves-light orange">Je m'inscris !</a>
             </div>
         </div>
     </div>
