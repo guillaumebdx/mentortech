@@ -44,10 +44,16 @@ class Lesson
      */
     private $technologies;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Part::class, mappedBy="lesson", orphanRemoval=true)
+     */
+    private $parts;
+
     public function __construct()
     {
         $this->programs = new ArrayCollection();
         $this->technologies = new ArrayCollection();
+        $this->parts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,6 +144,36 @@ class Lesson
     public function removeTechnology(Technology $technology): self
     {
         $this->technologies->removeElement($technology);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Part[]
+     */
+    public function getParts(): Collection
+    {
+        return $this->parts;
+    }
+
+    public function addPart(Part $part): self
+    {
+        if (!$this->parts->contains($part)) {
+            $this->parts[] = $part;
+            $part->setLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removePart(Part $part): self
+    {
+        if ($this->parts->removeElement($part)) {
+            // set the owning side to null (unless already changed)
+            if ($part->getLesson() === $this) {
+                $part->setLesson(null);
+            }
+        }
 
         return $this;
     }
