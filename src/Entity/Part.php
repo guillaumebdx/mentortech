@@ -42,12 +42,6 @@ class Part
      */
     private $content;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Lesson::class, inversedBy="parts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $lesson;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -109,18 +103,6 @@ class Part
     public function setContent(?Content $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getLesson(): ?Lesson
-    {
-        return $this->lesson;
-    }
-
-    public function setLesson(?Lesson $lesson): self
-    {
-        $this->lesson = $lesson;
 
         return $this;
     }

@@ -5,6 +5,8 @@
 
 {% block body %}
     {% include 'component/_breadcrumb_lesson.html.twig' %}
+    <h4>Cours {{ lesson.name }}</h4>
+    <h5>Création du contenu</h5>
 {{ form_start(form) }}
 {{ form_widget(form) }}
     <button class="waves-effect waves-light btn">OK</button>

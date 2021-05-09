@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=LessonRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Lesson
 {
@@ -45,9 +46,9 @@ class Lesson
     private $technologies;
 
     /**
-     * @ORM\OneToMany(targetEntity=Part::class, mappedBy="lesson", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity=Content::class, inversedBy="lesson", cascade={"persist", "remove"})
      */
-    private $parts;
+    private $content;
 
     public function __construct()
     {
@@ -149,32 +150,34 @@ class Lesson
     }
 
     /**
-     * @return Collection|Part[]
+     * Gets triggered only on insert
+     * @ORM\PrePersist
      */
-    public function getParts(): Collection
+    public function onPrePersist()
     {
-        return $this->parts;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
-    public function addPart(Part $part): self
+    /**
+     * Gets triggered only on insert
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
     {
-        if (!$this->parts->contains($part)) {
-            $this->parts[] = $part;
-            $part->setLesson($this);
-        }
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function getContent(): ?Content
+    {
+        return $this->content;
+    }
+
+    public function setContent(?Content $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }
 
-    public function removePart(Part $part): self
-    {
-        if ($this->parts->removeElement($part)) {
-            // set the owning side to null (unless already changed)
-            if ($part->getLesson() === $this) {
-                $part->setLesson(null);
-            }
-        }
-
-        return $this;
-    }
 }

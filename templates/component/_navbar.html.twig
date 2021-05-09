@@ -1,9 +1,11 @@
-<nav class="light-blue lighten-1">
+<nav class="light-blue lighten-1 main-nav">
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     <div class="nav-wrapper">
         <a href="{{ path('home') }}" class="brand-logo">MentorTech</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="{{ path('app_login') }}"><i class="material-icons left">account_circle</i>Login</a></li>
             <li><a href="#"><i class="material-icons right">view_module</i>Cours</a></li>
+            <li><a href="{{ path('lesson_new') }}">Nouveau cours</a></li>
         </ul>
     </div>
 </nav>

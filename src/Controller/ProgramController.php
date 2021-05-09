@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Technology;
-use App\Form\TechnologyType;
-use App\Repository\TechnologyRepository;
+use App\Entity\Program;
+use App\Form\ProgramType;
+use App\Repository\ProgramRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,24 +12,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/technology", name="technology_")
+ * @Route("/program", name="program_")
  */
-class TechnologyController extends AbstractController
+class ProgramController extends AbstractController
 {
     /**
      * @Route("/new", name="new")
      */
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $technology = new Technology();
-        $form = $this->createForm(TechnologyType::class, $technology);
+        $program = new Program();
+        $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($technology);
+            $entityManager->persist($program);
             $entityManager->flush();
-            return $this->redirectToRoute('technology_all');
+            return $this->redirectToRoute('program_all');
         }
-        return $this->render('technology/index.html.twig', [
+        return $this->render('program/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -37,8 +37,8 @@ class TechnologyController extends AbstractController
     /**
      * @Route("/all", name="all")
      */
-    public function all(TechnologyRepository $technologyRepository)
+    public function all(ProgramRepository $programRepository)
     {
-        dd($technologyRepository->findAll());
+        dd($programRepository->findAll());
     }
 }

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ContentRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Content
 {
@@ -53,6 +54,11 @@ class Content
      * @ORM\Column(type="text", nullable=true)
      */
     private $finalSolution;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Lesson::class, mappedBy="content", cascade={"persist", "remove"})
+     */
+    private $lesson;
 
     public function __construct()
     {
@@ -183,5 +189,46 @@ class Content
         $this->finalSolution = $finalSolution;
 
         return $this;
+    }
+
+    public function getLesson(): ?Lesson
+    {
+        return $this->lesson;
+    }
+
+    public function setLesson(?Lesson $lesson): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($lesson === null && $this->lesson !== null) {
+            $this->lesson->setContent(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($lesson !== null && $lesson->getContent() !== $this) {
+            $lesson->setContent($this);
+        }
+
+        $this->lesson = $lesson;
+
+        return $this;
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }
