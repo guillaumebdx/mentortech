@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PartRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class Part
      * @ORM\ManyToOne(targetEntity=Content::class, inversedBy="parts")
      */
     private $content;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Screencast::class, mappedBy="part", cascade={"persist"})
+     */
+    private $screencasts;
+
+    public function __construct()
+    {
+        $this->screencasts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class Part
     public function setContent(?Content $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Screencast[]
+     */
+    public function getScreencasts(): Collection
+    {
+        return $this->screencasts;
+    }
+
+    public function addScreencast(Screencast $screencast): self
+    {
+        if (!$this->screencasts->contains($screencast)) {
+            $this->screencasts[] = $screencast;
+            $screencast->setPart($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScreencast(Screencast $screencast): self
+    {
+        if ($this->screencasts->removeElement($screencast)) {
+            // set the owning side to null (unless already changed)
+            if ($screencast->getPart() === $this) {
+                $screencast->setPart(null);
+            }
+        }
 
         return $this;
     }

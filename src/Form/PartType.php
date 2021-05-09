@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Part;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +19,11 @@ class PartType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('exercise', TextareaType::class)
             ->add('solution', TextareaType::class)
+            ->add('screencasts', CollectionType::class, [
+                'entry_type' => ScreencastType::class,
+                'entry_options' => ['label' => false],
+                'required' => false,
+            ])
             ->add('saveAndAdd', SubmitType::class, ['label' => 'Sauvegarder et ajouter une partie'])
             ->add('save', SubmitType::class, ['label' => 'Créer la partie'])
         ;

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Content;
 use App\Entity\Lesson;
 use App\Entity\Part;
+use App\Entity\Screencast;
 use App\Form\ContentFinalType;
 use App\Form\ContentType;
 use App\Form\LessonType;
@@ -74,9 +75,20 @@ class LessonController extends AbstractController
     {
         $part = new Part();
         $part->setContent($content);
+        $screencast = new Screencast();
+        $screencast2 = new Screencast();
+        $screencast3 = new Screencast();
+        $part->addScreencast($screencast);
+        $part->addScreencast($screencast2);
+        $part->addScreencast($screencast3);
         $form = $this->createForm(PartType::class, $part);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($part->getScreencasts() as $screencast) {
+                if ($screencast->getTitle() === null) {
+                    $part->removeScreencast($screencast);
+                }
+            }
             $entityManager->persist($part);
             $entityManager->flush();
             $nextAction = $form->get('saveAndAdd')->isClicked()

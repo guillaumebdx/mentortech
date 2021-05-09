@@ -36,11 +36,6 @@ class Content
     private $introduction;
 
     /**
-     * @ORM\OneToMany(targetEntity=Screencast::class, mappedBy="content")
-     */
-    private $screencasts;
-
-    /**
      * @ORM\OneToMany(targetEntity=Part::class, mappedBy="content")
      */
     private $parts;
@@ -62,7 +57,6 @@ class Content
 
     public function __construct()
     {
-        $this->screencasts = new ArrayCollection();
         $this->parts = new ArrayCollection();
     }
 
@@ -103,36 +97,6 @@ class Content
     public function setIntroduction(?string $introduction): self
     {
         $this->introduction = $introduction;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Screencast[]
-     */
-    public function getScreencasts(): Collection
-    {
-        return $this->screencasts;
-    }
-
-    public function addScreencast(Screencast $screencast): self
-    {
-        if (!$this->screencasts->contains($screencast)) {
-            $this->screencasts[] = $screencast;
-            $screencast->setContent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScreencast(Screencast $screencast): self
-    {
-        if ($this->screencasts->removeElement($screencast)) {
-            // set the owning side to null (unless already changed)
-            if ($screencast->getContent() === $this) {
-                $screencast->setContent(null);
-            }
-        }
 
         return $this;
     }

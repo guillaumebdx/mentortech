@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ScreencastRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Screencast
 {
@@ -38,9 +39,9 @@ class Screencast
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Content::class, inversedBy="screencasts")
+     * @ORM\ManyToOne(targetEntity=Part::class, inversedBy="screencasts", cascade={"persist"})
      */
-    private $content;
+    private $part;
 
     public function getId(): ?int
     {
@@ -95,15 +96,34 @@ class Screencast
         return $this;
     }
 
-    public function getContent(): ?Content
+    public function getPart(): ?Part
     {
-        return $this->content;
+        return $this->part;
     }
 
-    public function setContent(?Content $content): self
+    public function setPart(?Part $part): self
     {
-        $this->content = $content;
+        $this->part = $part;
 
         return $this;
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }
