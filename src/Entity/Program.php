@@ -40,6 +40,11 @@ class Program
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->lessons = new ArrayCollection();
@@ -127,5 +132,17 @@ class Program
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

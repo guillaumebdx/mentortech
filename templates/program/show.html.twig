@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProgramController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <ul class="collection">
+        {% for lesson in program.lessons %}
+            <li class="collection-item avatar">
+                <a href="">
+                    <i class="material-icons circle red">play_arrow</i>
+                </a>
+                <span class="title">{{ lesson.name }}</span>
+                <p>
+                    {% for technology in lesson.technologies %}
+                        {{ technology.name }}
+                    {% endfor %}
+                </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">fiber_new</i></a>
+            </li>
+        {% else %}
+            Aucun cours dans ce programe pour le moment
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

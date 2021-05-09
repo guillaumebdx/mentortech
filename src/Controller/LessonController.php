@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/lesson", name="lesson_")
+ * @Route("/admin/lesson", name="lesson_")
  */
 class LessonController extends AbstractController
 {

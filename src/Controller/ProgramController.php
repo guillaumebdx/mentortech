@@ -39,6 +39,18 @@ class ProgramController extends AbstractController
      */
     public function all(ProgramRepository $programRepository)
     {
-        dd($programRepository->findAll());
+        return $this->render('program/all.html.twig', [
+            'programs' => $programRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/show/{id}", name="show")
+     */
+    public function show(Program $program, ProgramRepository $programRepository)
+    {
+        return $this->render('program/show.html.twig', [
+            'program' => $programRepository->find($program),
+        ]);
     }
 }
