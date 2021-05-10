@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'lesson/_breadcrumb_lesson.html.twig' %}
+        <h2>Introduction</h2>
+        <p>
+            {{ lesson.content.introduction }}
+        </p>
+        <a href="{{ path('lesson_part', {id: lesson.content.parts[0].id}) }}" class="waves-effect waves-light btn-large">
+            <i class="material-icons right">
+                directions_run
+            </i>C'est parti !
+        </a>
+    </div>
+{% endblock %}

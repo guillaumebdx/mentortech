@@ -7,7 +7,7 @@
         <ul class="collection">
         {% for lesson in program.lessons %}
             <li class="collection-item avatar">
-                <a href="">
+                <a href="{{ path('lesson_show', {id: lesson.id}) }}">
                     <i class="material-icons circle red">play_arrow</i>
                 </a>
                 <span class="title">{{ lesson.name }}</span>

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'lesson/_breadcrumb_lesson.html.twig' %}
+        <p>
+            {{ lesson.content.finalExercise }}
+        </p>
+    </div>
+{% endblock %}

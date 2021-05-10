@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/admin/lesson", name="lesson_")
  */
-class LessonController extends AbstractController
+class LessonAdminController extends AbstractController
 {
     /**
      * @Route("/new", name="new")
@@ -39,7 +39,7 @@ class LessonController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('lesson_content_new', ['id' => $lesson->getId()]);
         }
-        return $this->render('lesson/index.html.twig', [
+        return $this->render('lesson_admin/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -60,7 +60,7 @@ class LessonController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('lesson_part_new', ['id' => $content->getId()]);
         }
-        return $this->render('lesson/content.html.twig', [
+        return $this->render('lesson_admin/content.html.twig', [
             'form' => $form->createView(),
             'lesson' => $lesson,
         ]);
@@ -96,7 +96,7 @@ class LessonController extends AbstractController
                 : 'lesson_final';
             return $this->redirectToRoute($nextAction, ['id' => $content->getId()]);
         }
-        return $this->render('lesson/part.html.twig', [
+        return $this->render('lesson_admin/part.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -115,7 +115,7 @@ class LessonController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('home');
         }
-        return $this->render('lesson/final.html.twig', [
+        return $this->render('lesson_admin/final.html.twig', [
             'form' => $form->createView(),
         ]);
     }
