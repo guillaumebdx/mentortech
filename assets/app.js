@@ -16,3 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems);
 });
+//start highlightjs for code coloration
+import 'highlight.js/scss/default.scss'
+import hljs from 'highlight.js';
+hljs.highlightAll();
+
