@@ -4,17 +4,12 @@
     <div class="container">
         {% include 'lesson/_breadcrumb_lesson.html.twig' %}
         <h2>Introduction</h2>
-        <p>
-            {{ part.introduction }}
-        </p>
+        {{ part.introduction|raw }}
         <h2>Méthode</h2>
-        <p>
-            {{ part.description }}
-        </p>
+        {{ part.description|raw }}
+
         <h2>Exercice</h2>
-        <p>
-            {{ part.exercise }}
-        </p>
+        {{ part.exercise|raw }}
         <h2>Live coding</h2>
         {% for screencast in part.screencasts %}
             {{ screencast.title }}

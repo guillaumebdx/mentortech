@@ -93,7 +93,7 @@ class LessonAdminController extends AbstractController
             $entityManager->flush();
             $nextAction = $form->get('saveAndAdd')->isClicked()
                 ? 'lesson_part_new'
-                : 'lesson_final';
+                : 'lesson_final_admin';
             return $this->redirectToRoute($nextAction, ['id' => $content->getId()]);
         }
         return $this->render('lesson_admin/part.html.twig', [
@@ -102,7 +102,7 @@ class LessonAdminController extends AbstractController
     }
 
     /**
-     * @Route("/content/{id}/final", name="final")
+     * @Route("/content/{id}/final", name="final_admin")
      */
     public function final(Content $content,
                           Request $request,

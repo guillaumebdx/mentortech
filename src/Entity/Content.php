@@ -6,6 +6,7 @@ use App\Repository\ContentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Michelf\MarkdownExtra;
 
 /**
  * @ORM\Entity(repositoryClass=ContentRepository::class)
@@ -89,9 +90,9 @@ class Content
         return $this;
     }
 
-    public function getIntroduction(): ?string
+    public function getIntroduction($withMarkdown = true): ?string
     {
-        return $this->introduction;
+        return $withMarkdown ? MarkdownExtra::defaultTransform($this->introduction) : $this->introduction;
     }
 
     public function setIntroduction(?string $introduction): self
@@ -131,9 +132,9 @@ class Content
         return $this;
     }
 
-    public function getFinalExercise(): ?string
+    public function getFinalExercise($withMarkdown = true): ?string
     {
-        return $this->finalExercise;
+        return $withMarkdown ? MarkdownExtra::defaultTransform($this->finalExercise) : $this->finalExercise;
     }
 
     public function setFinalExercise(?string $finalExercise): self

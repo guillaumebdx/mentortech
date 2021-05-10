@@ -4,7 +4,7 @@
     <div class="container">
         {% include 'lesson/_breadcrumb_lesson.html.twig' %}
         <p>
-            {{ lesson.content.finalExercise }}
+            {{ lesson.content.finalExercise|raw }}
         </p>
     </div>
 {% endblock %}

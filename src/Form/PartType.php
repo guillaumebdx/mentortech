@@ -15,6 +15,7 @@ class PartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('title')
             ->add('introduction', TextareaType::class)
             ->add('description', TextareaType::class)
             ->add('exercise', TextareaType::class)
