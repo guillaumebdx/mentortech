@@ -1,0 +1,10 @@
+<nav>
+    <div class="nav-wrapper orange lighten-1">
+        <div class="col s12">
+            <a href="" class="breadcrumb {{ app.request.get('_route') == 'lesson_new' ? 'white-text text-bold' : '' }} ">Nom et langages</a>
+            <a href="" class="breadcrumb {{ app.request.get('_route') == 'lesson_content_new' ? 'white-text text-bold' : '' }}">Introduction</a>
+            <a href="#!" class="breadcrumb {{ app.request.get('_route') == 'lesson_part_new' ? 'white-text text-bold' : '' }}">Parties</a>
+            <a href="#!" class="breadcrumb {{ app.request.get('_route') == 'lesson_final' ? 'white-text text-bold' : '' }}">Final</a>
+        </div>
+    </div>
+</nav>
