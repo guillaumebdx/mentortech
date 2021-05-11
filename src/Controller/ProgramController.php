@@ -51,8 +51,13 @@ class ProgramController extends AbstractController
      */
     public function show(Program $program, ProgramRepository $programRepository)
     {
+        $ownByUserLessons = [];
+        foreach ($this->getUser()->getStatusLessons() as $statusLesson) {
+            $ownByUserLessons[] = $statusLesson->getLesson();
+        }
         return $this->render('program/show.html.twig', [
             'program' => $programRepository->find($program),
+            'ownByUserLessons' => $ownByUserLessons,
         ]);
     }
 }

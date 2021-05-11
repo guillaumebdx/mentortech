@@ -16,7 +16,13 @@
                         {{ technology.name }}
                     {% endfor %}
                 </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">fiber_new</i></a>
+                <a href="#!" class="secondary-content">
+                    {% if lesson in ownByUserLessons %}
+                        <i class="material-icons">remove_red_eye</i>
+                    {% else %}
+                        <i class="material-icons">fiber_new</i>
+                    {% endif %}
+                </a>
             </li>
         {% else %}
             Aucun cours dans ce programe pour le moment

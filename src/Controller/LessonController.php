@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Lesson;
 use App\Entity\Part;
+use App\Entity\StatusLesson;
+use App\Repository\StatusLessonRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,8 +29,19 @@ class LessonController extends AbstractController
     /**
      * @Route("/part/{id}", name="part")
      */
-    public function part(Part $part)
+    public function part(Part $part,
+                         StatusLessonRepository $statusLessonRepository,
+                         EntityManagerInterface $entityManager)
     {
+        $lesson = $part->getContent()->getLesson();
+        $user   = $this->getUser();
+        if (!$statusLessonRepository->findBy(['user' => $user, 'lesson' => $lesson])) {
+            $statusLesson = new StatusLesson();
+            $statusLesson->setLesson($lesson)
+                ->setUser($user);
+            $entityManager->persist($statusLesson);
+            $entityManager->flush();
+        }
         return $this->render('lesson/part.html.twig', [
             'part'   => $part,
             'lesson' => $part->getContent()->getLesson(),
