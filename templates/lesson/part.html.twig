@@ -3,16 +3,20 @@
 {% block body %}
     <div class="container">
         {% include 'lesson/_breadcrumb_lesson.html.twig' %}
+        <div class="lesson">
         <h2>Introduction</h2>
         {{ part.introduction|raw }}
-        <h2>Méthode</h2>
         {{ part.description|raw }}
 
         <h2>Exercice</h2>
         {{ part.exercise|raw }}
         <h2>Live coding</h2>
         {% for screencast in part.screencasts %}
-            {{ screencast.title }}
+            <h5>{{ screencast.title }}</h5>
+            <div class="embed-responsive embed-responsive-21by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ screencast.name }}" allowfullscreen></iframe>
+            </div>
         {% endfor %}
+        </div>
     </div>
 {% endblock %}
