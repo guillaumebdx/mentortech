@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include 'lesson/_breadcrumb_lesson.html.twig' %}
     <div class="container">
-        {% include 'lesson/_breadcrumb_lesson.html.twig' %}
+        <h2>Pratique ! 😎</h2>
         <p>
             {{ lesson.content.finalExercise|raw }}
         </p>

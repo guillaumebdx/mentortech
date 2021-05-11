@@ -50,11 +50,17 @@ class Lesson
      */
     private $content;
 
+    /**
+     * @ORM\OneToMany(targetEntity=StatusLesson::class, mappedBy="lesson")
+     */
+    private $statusLessons;
+
     public function __construct()
     {
         $this->programs = new ArrayCollection();
         $this->technologies = new ArrayCollection();
         $this->parts = new ArrayCollection();
+        $this->statusLessons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,6 +182,36 @@ class Lesson
     public function setContent(?Content $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StatusLesson[]
+     */
+    public function getStatusLessons(): Collection
+    {
+        return $this->statusLessons;
+    }
+
+    public function addStatusLesson(StatusLesson $statusLesson): self
+    {
+        if (!$this->statusLessons->contains($statusLesson)) {
+            $this->statusLessons[] = $statusLesson;
+            $statusLesson->setLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStatusLesson(StatusLesson $statusLesson): self
+    {
+        if ($this->statusLessons->removeElement($statusLesson)) {
+            // set the owning side to null (unless already changed)
+            if ($statusLesson->getLesson() === $this) {
+                $statusLesson->setLesson(null);
+            }
+        }
 
         return $this;
     }

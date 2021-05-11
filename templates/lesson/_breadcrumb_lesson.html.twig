@@ -1,11 +1,13 @@
-<nav>
-    <div class="nav-wrapper orange lighten-1">
-        <div class="col s12">
-            <a href="{{ path('lesson_show', {id: lesson.id}) }}" class="breadcrumb">Introduction</a>
-            {% for part in lesson.content.parts %}
-                <a href="{{ path('lesson_part', {id: part.id}) }}" class="breadcrumb">{{ loop.index }} - {{ part.title }}</a>
-            {% endfor %}
-            <a href="{{ path('lesson_final', {id: lesson.id}) }}" class="breadcrumb">Exercice final</a>
+<div class="nav-lesson">
+    <nav>
+        <div class="nav-wrapper orange lighten-1 breadcrumb-lesson">
+            <div class="col s12">
+                <a href="{{ path('lesson_show', {id: lesson.id}) }}" class="breadcrumb">Introduction</a>
+                {% for part in lesson.content.parts %}
+                    <a href="{{ path('lesson_part', {id: part.id}) }}" class="breadcrumb">{{ loop.index }} - {{ part.title }}</a>
+                {% endfor %}
+                <a href="{{ path('lesson_final', {id: lesson.id}) }}" class="breadcrumb">Exercice final</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</div>

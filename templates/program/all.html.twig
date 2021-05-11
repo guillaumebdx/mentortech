@@ -5,18 +5,18 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-        {% for program in programs %}
+        {% for attribution in attributions %}
                 <div class="col s12 m2">
                     <div class="card">
                         <div class="card-image">
                             <img src="https://picsum.photos/300/300?random={{ loop.index }}">
-                            <span class="card-title">{{ program.name }}</span>
-                            <a href="{{ path('program_show', {id: program.id}) }}" class="btn-floating halfway-fab waves-effect waves-light red">
+                            <span class="card-title">{{ attribution.program.name }}</span>
+                            <a href="{{ path('program_show', {id: attribution.program.id}) }}" class="btn-floating halfway-fab waves-effect waves-light red">
                                 <i class="material-icons">arrow_forward</i>
                             </a>
                         </div>
                         <div class="card-content">
-                            <p>{{ program.description }}</p>
+                            <p>{{ attribution.program.description }}</p>
                         </div>
                     </div>
                 </div>

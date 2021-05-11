@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include 'lesson/_breadcrumb_lesson.html.twig' %}
     <div class="container">
-        {% include 'lesson/_breadcrumb_lesson.html.twig' %}
-        <h2>Introduction</h2>
+        <h2>📖 Introduction du cours</h2>
         {{ lesson.content.introduction|raw }}
 
         <a href="{{ path('lesson_part', {id: lesson.content.parts[0].id}) }}" class="waves-effect waves-light btn-large">

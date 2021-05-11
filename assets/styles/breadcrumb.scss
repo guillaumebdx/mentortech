@@ -1,0 +1,12 @@
+
+@media screen and (max-width : 992px) {
+  .nav-lesson {
+    nav {
+      line-height: unset;
+    }
+  }
+  nav .breadcrumb-lesson {
+    height: 80px;
+    overflow-x: scroll;
+  }
+}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -45,6 +47,22 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $githubName;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Attribution::class, mappedBy="user")
+     */
+    private $attributions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StatusLesson::class, mappedBy="user")
+     */
+    private $statusLessons;
+
+    public function __construct()
+    {
+        $this->attributions = new ArrayCollection();
+        $this->statusLessons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -147,6 +165,66 @@ class User implements UserInterface
     public function setGithubName(?string $githubName): self
     {
         $this->githubName = $githubName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attribution[]
+     */
+    public function getAttributions(): Collection
+    {
+        return $this->attributions;
+    }
+
+    public function addAttribution(Attribution $attribution): self
+    {
+        if (!$this->attributions->contains($attribution)) {
+            $this->attributions[] = $attribution;
+            $attribution->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttribution(Attribution $attribution): self
+    {
+        if ($this->attributions->removeElement($attribution)) {
+            // set the owning side to null (unless already changed)
+            if ($attribution->getUser() === $this) {
+                $attribution->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StatusLesson[]
+     */
+    public function getStatusLessons(): Collection
+    {
+        return $this->statusLessons;
+    }
+
+    public function addStatusLesson(StatusLesson $statusLesson): self
+    {
+        if (!$this->statusLessons->contains($statusLesson)) {
+            $this->statusLessons[] = $statusLesson;
+            $statusLesson->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStatusLesson(StatusLesson $statusLesson): self
+    {
+        if ($this->statusLessons->removeElement($statusLesson)) {
+            // set the owning side to null (unless already changed)
+            if ($statusLesson->getUser() === $this) {
+                $statusLesson->setUser(null);
+            }
+        }
 
         return $this;
     }

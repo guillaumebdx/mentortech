@@ -45,9 +45,15 @@ class Program
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Attribution::class, mappedBy="program")
+     */
+    private $attributions;
+
     public function __construct()
     {
         $this->lessons = new ArrayCollection();
+        $this->attributions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,6 +148,36 @@ class Program
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attribution[]
+     */
+    public function getAttributions(): Collection
+    {
+        return $this->attributions;
+    }
+
+    public function addAttribution(Attribution $attribution): self
+    {
+        if (!$this->attributions->contains($attribution)) {
+            $this->attributions[] = $attribution;
+            $attribution->setPrograms($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttribution(Attribution $attribution): self
+    {
+        if ($this->attributions->removeElement($attribution)) {
+            // set the owning side to null (unless already changed)
+            if ($attribution->getPrograms() === $this) {
+                $attribution->setPrograms(null);
+            }
+        }
 
         return $this;
     }

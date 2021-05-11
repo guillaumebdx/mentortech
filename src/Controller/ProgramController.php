@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Attribution;
 use App\Entity\Program;
 use App\Form\ProgramType;
+use App\Repository\AttributionRepository;
 use App\Repository\ProgramRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,10 +39,10 @@ class ProgramController extends AbstractController
     /**
      * @Route("/all", name="all")
      */
-    public function all(ProgramRepository $programRepository)
+    public function all(AttributionRepository $attributionRepository)
     {
         return $this->render('program/all.html.twig', [
-            'programs' => $programRepository->findAll(),
+            'attributions' => $attributionRepository->findBy(['user' => $this->getUser()]),
         ]);
     }
 
