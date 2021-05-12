@@ -101,9 +101,9 @@ class Part
         return $this;
     }
 
-    public function getSolution(): ?string
+    public function getSolution($withMarkdown = true): ?string
     {
-        return $this->solution;
+        return $withMarkdown ? MarkdownExtra::defaultTransform($this->solution) : $this->solution;
     }
 
     public function setSolution(?string $solution): self

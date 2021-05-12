@@ -55,12 +55,18 @@ class Lesson
      */
     private $statusLessons;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PostedSolution::class, mappedBy="lesson")
+     */
+    private $postedSolutions;
+
     public function __construct()
     {
         $this->programs = new ArrayCollection();
         $this->technologies = new ArrayCollection();
         $this->parts = new ArrayCollection();
         $this->statusLessons = new ArrayCollection();
+        $this->postedSolutions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,6 +216,36 @@ class Lesson
             // set the owning side to null (unless already changed)
             if ($statusLesson->getLesson() === $this) {
                 $statusLesson->setLesson(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostedSolution[]
+     */
+    public function getPostedSolutions(): Collection
+    {
+        return $this->postedSolutions;
+    }
+
+    public function addPostedSolution(PostedSolution $postedSolution): self
+    {
+        if (!$this->postedSolutions->contains($postedSolution)) {
+            $this->postedSolutions[] = $postedSolution;
+            $postedSolution->setLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostedSolution(PostedSolution $postedSolution): self
+    {
+        if ($this->postedSolutions->removeElement($postedSolution)) {
+            // set the owning side to null (unless already changed)
+            if ($postedSolution->getLesson() === $this) {
+                $postedSolution->setLesson(null);
             }
         }
 

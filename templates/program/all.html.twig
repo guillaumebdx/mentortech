@@ -18,6 +18,9 @@
                         <div class="card-content">
                             <p>{{ attribution.program.description }}</p>
                         </div>
+                        <div class="card-action">
+                            Fin le {{ attribution.endAt|date('d/m/Y') }}
+                        </div>
                     </div>
                 </div>
         {% else %}

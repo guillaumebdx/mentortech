@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Attribution;
+use App\Entity\PostedSolution;
 use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\AttributionRepository;
+use App\Repository\PostedSolutionRepository;
 use App\Repository\ProgramRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,14 +51,15 @@ class ProgramController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      */
-    public function show(Program $program, ProgramRepository $programRepository)
+    public function show(Program $program,
+                         ProgramRepository $programRepository)
     {
         $ownByUserLessons = [];
         foreach ($this->getUser()->getStatusLessons() as $statusLesson) {
             $ownByUserLessons[] = $statusLesson->getLesson();
         }
         return $this->render('program/show.html.twig', [
-            'program' => $programRepository->find($program),
+            'program'          => $programRepository->find($program),
             'ownByUserLessons' => $ownByUserLessons,
         ]);
     }

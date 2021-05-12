@@ -58,10 +58,16 @@ class User implements UserInterface
      */
     private $statusLessons;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PostedSolution::class, mappedBy="user")
+     */
+    private $postedSolutions;
+
     public function __construct()
     {
         $this->attributions = new ArrayCollection();
         $this->statusLessons = new ArrayCollection();
+        $this->postedSolutions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,6 +229,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($statusLesson->getUser() === $this) {
                 $statusLesson->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostedSolution[]
+     */
+    public function getPostedSolutions(): Collection
+    {
+        return $this->postedSolutions;
+    }
+
+    public function addPostedSolution(PostedSolution $postedSolution): self
+    {
+        if (!$this->postedSolutions->contains($postedSolution)) {
+            $this->postedSolutions[] = $postedSolution;
+            $postedSolution->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostedSolution(PostedSolution $postedSolution): self
+    {
+        if ($this->postedSolutions->removeElement($postedSolution)) {
+            // set the owning side to null (unless already changed)
+            if ($postedSolution->getUser() === $this) {
+                $postedSolution->setUser(null);
             }
         }
 

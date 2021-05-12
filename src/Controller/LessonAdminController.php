@@ -11,6 +11,8 @@ use App\Form\ContentType;
 use App\Form\LessonType;
 use App\Form\PartType;
 use App\Repository\LessonRepository;
+use App\Repository\PostedSolutionRepository;
+use App\Repository\StatusLessonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -126,5 +128,15 @@ class LessonAdminController extends AbstractController
     public function all(LessonRepository $lessonRepository)
     {
         dd($lessonRepository->findAll());
+    }
+
+    /**
+     * @Route("/solution/all", name="solution_all")
+     */
+    public function status(PostedSolutionRepository $postedSolutionRepository)
+    {
+        return $this->render('lesson_admin/status_all.html.twig', [
+            'posted_solutions' => $postedSolutionRepository->findBy(['isValid' => false]),
+        ]);
     }
 }

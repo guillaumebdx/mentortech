@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <ul class="collection">
+        {% for solution in posted_solutions %}
+            <li class="collection-item avatar">
+                <img class="circle" src="https://github.com/{{ solution.user.githubName ?? 'github'  }}.png?size=100">
+                <span class="title">
+                    {% for program in  solution.lesson.programs %}
+                        {{ program.name }} -
+                    {% endfor %}
+                    <span class="text-primary pink">{{ solution.lesson.name }}</span>
+                </span>
+
+                <br>
+                <a href="{{ solution.url }}" target="_blank">Voir la solution</a>
+                <br>
+                <a href="">Valider la solution</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

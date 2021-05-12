@@ -7,5 +7,11 @@
         <p>
             {{ lesson.content.finalExercise|raw }}
         </p>
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="waves-effect waves-light btn">Poster ma solution</button>
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

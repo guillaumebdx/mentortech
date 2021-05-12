@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Lesson;
 use App\Entity\Part;
+use App\Entity\PostedSolution;
 use App\Entity\StatusLesson;
+use App\Form\PostedSolutionType;
 use App\Repository\StatusLessonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,7 +41,8 @@ class LessonController extends AbstractController
         if (!$statusLessonRepository->findBy(['user' => $user, 'lesson' => $lesson])) {
             $statusLesson = new StatusLesson();
             $statusLesson->setLesson($lesson)
-                ->setUser($user);
+                ->setUser($user)
+                ->setIsOpen(true);
             $entityManager->persist($statusLesson);
             $entityManager->flush();
         }
@@ -51,10 +55,30 @@ class LessonController extends AbstractController
     /**
      * @Route("/final/{id}", name="final")
      */
-    public function final(Lesson $lesson)
+    public function final(Lesson $lesson,
+                          Request $request,
+                          EntityManagerInterface $entityManager,
+                          StatusLessonRepository $statusLessonRepository)
     {
+        $postedSolution = new PostedSolution();
+        $postedSolution->setUser($this->getUser());
+        $postedSolution->setIsValid(false);
+        $postedSolution->setLesson($lesson);
+
+        $form = $this->createForm(PostedSolutionType::class, $postedSolution);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $statusLesson = $statusLessonRepository->findOneBy(['user' => $this->getUser(), 'lesson' => $lesson]);
+            $statusLesson->setIsPosted(true);
+            $statusLesson->setIsOpen(false);
+            $entityManager->persist($statusLesson);
+            $entityManager->persist($postedSolution);
+            $entityManager->flush();
+            return $this->redirectToRoute('home');
+        }
         return $this->render('lesson/final.html.twig', [
             'lesson' => $lesson,
+            'form'   => $form->createView(),
         ]);
     }
 }

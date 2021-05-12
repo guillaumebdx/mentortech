@@ -10,7 +10,12 @@
                 <h5 class="header col s12 light">Apprenez le web en autonomie et avec l'appui de mentors</h5>
             </div>
             <div class="row center">
-                <a href="{{ path('app_register') }}" id="download-button" class="btn-large waves-effect waves-light orange">Je m'inscris !</a>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="" id="download-button" class="btn-large waves-effect waves-light orange">J'accède à mon compte</a>
+                {% else %}
+                    <a href="{{ path('app_register') }}" id="download-button" class="btn-large waves-effect waves-light orange">Je m'inscris !</a>
+                    <a href="{{ path('app_login') }}" id="download-button" class="btn-large waves-effect waves-light orange">Je me connecte !</a>
+                {% endif %}
             </div>
         </div>
     </div>

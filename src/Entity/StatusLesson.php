@@ -27,6 +27,21 @@ class StatusLesson
      */
     private $lesson;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPosted;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isValid;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOpen;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +67,42 @@ class StatusLesson
     public function setLesson(?Lesson $lesson): self
     {
         $this->lesson = $lesson;
+
+        return $this;
+    }
+
+    public function getIsPosted(): ?bool
+    {
+        return $this->isPosted;
+    }
+
+    public function setIsPosted(?bool $isPosted): self
+    {
+        $this->isPosted = $isPosted;
+
+        return $this;
+    }
+
+    public function getIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(?bool $isValid): self
+    {
+        $this->isValid = $isValid;
+
+        return $this;
+    }
+
+    public function getIsOpen(): ?bool
+    {
+        return $this->isOpen;
+    }
+
+    public function setIsOpen(bool $isOpen): self
+    {
+        $this->isOpen = $isOpen;
 
         return $this;
     }
