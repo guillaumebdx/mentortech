@@ -1,9 +1,21 @@
 <nav class="light-blue lighten-1 main-nav">
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="#" data-target="slide-out" class="sidenav-trigger {{ app.request.attributes.get('_route') == 'home' ? 'btn pulse light-blue lighten-1' : '' }}"><i class="material-icons">menu</i></a>
+    {% endif %}
     <div class="nav-wrapper">
         <a href="{{ path('home') }}" class="brand-logo">MentorTech</a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="{{ path('app_login') }}"><i class="material-icons left">account_circle</i>Login</a></li>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li>
+                    <a class="link" href="{{ path('app_logout') }}">
+                        <i class="material-icons left">do_not_disturb_alt</i>
+                        Logout</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ path('app_login') }}"><i class="material-icons left">account_circle</i>Login</a>
+                </li>
+            {% endif %}
             <li><a href="{{ path('program_all') }}"><i class="material-icons right">view_module</i>Cours</a></li>
             <li><a href="{{ path('lesson_new') }}">Nouveau cours</a></li>
         </ul>
