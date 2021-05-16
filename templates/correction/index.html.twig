@@ -15,7 +15,13 @@
                             <span class="title">{{ postedSolution.user.email }}</span>
                             <p>{{ postedSolution.lesson.name}}</p>
                             <p>{{ postedSolution.corrections|length }} correction de pair réalisé</p>
-                            <a href="{{ path('correction_apply', {id: postedSolution.id}) }}" class="secondary-content">
+                            {% if postedSolution.isValid %}
+                                <span class="round green lighten-2">
+                                Approuvée par un mentor
+                                </span>
+                            {% endif %}
+
+                            <a href="{% if is_granted('ROLE_ADMIN') %} {{ path('correction_mentor', {id: postedSolution.id}) }} {% else %} {{ path('correction_apply', {id: postedSolution.id}) }} {% endif %}" class="secondary-content">
                                 <i class="material-icons">send</i>
                             </a>
                         </div>

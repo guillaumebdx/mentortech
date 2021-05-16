@@ -6,6 +6,7 @@ use App\Entity\Correction;
 use App\Entity\PostedSolution;
 use App\Entity\User;
 use App\Form\CorrectionType;
+use App\Form\MentorType;
 use App\Repository\CorrectionRepository;
 use App\Repository\PostedSolutionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -62,5 +63,24 @@ class CorrectionController extends AbstractController
             'postedSolution' => $postedSolution,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/mentor/{id}", name="mentor")
+     */
+    public function mentor(PostedSolution $postedSolution, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(MentorType::class, $postedSolution);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($postedSolution);
+            $entityManager->flush();
+            $this->addFlash('green', 'Correction réalisée');
+            return $this->redirectToRoute('correction_todo');
+        }
+        return $this->render('correction/mentor.html.twig', [
+            'form' => $form->createView(),
+            'postedSolution' => $postedSolution,
+        ]);;
     }
 }
