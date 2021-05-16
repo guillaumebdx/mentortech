@@ -9,6 +9,7 @@ use App\Form\CorrectionType;
 use App\Form\MentorType;
 use App\Repository\CorrectionRepository;
 use App\Repository\PostedSolutionRepository;
+use App\Repository\StatusLessonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,12 +69,20 @@ class CorrectionController extends AbstractController
     /**
      * @Route("/mentor/{id}", name="mentor")
      */
-    public function mentor(PostedSolution $postedSolution, Request $request, EntityManagerInterface $entityManager)
+    public function mentor(PostedSolution $postedSolution,
+                           Request $request,
+                           EntityManagerInterface $entityManager,
+                           StatusLessonRepository $statusLessonRepository)
     {
         $form = $this->createForm(MentorType::class, $postedSolution);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($postedSolution);
+            if ($postedSolution->getIsValid()) {
+                $statusLesson = $statusLessonRepository->findOneBy(['user' => $postedSolution->getUser(), 'lesson' => $postedSolution->getLesson()]);
+                $statusLesson->setIsValid(true);
+                $entityManager->persist($statusLesson);
+            }
             $entityManager->flush();
             $this->addFlash('green', 'Correction réalisée');
             return $this->redirectToRoute('correction_todo');

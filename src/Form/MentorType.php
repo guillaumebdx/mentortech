@@ -17,6 +17,7 @@ class MentorType extends AbstractType
             ->add('mentorComment', TextareaType::class)
             ->add('isValid', CheckboxType::class, [
                 'label' => 'Valider la solution',
+                'required' => false,
             ])
         ;
     }
