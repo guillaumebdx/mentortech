@@ -74,11 +74,23 @@ class User implements UserInterface
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Correction::class, mappedBy="userPoster")
+     */
+    private $corrections;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Correction::class, mappedBy="reviewer")
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->attributions = new ArrayCollection();
         $this->statusLessons = new ArrayCollection();
         $this->postedSolutions = new ArrayCollection();
+        $this->corrections = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -317,5 +329,62 @@ class User implements UserInterface
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @return Collection|Correction[]
+     */
+    public function getCorrections(): Collection
+    {
+        return $this->corrections;
+    }
+
+    public function addCorrection(Correction $correction): self
+    {
+        if (!$this->corrections->contains($correction)) {
+            $this->corrections[] = $correction;
+            $correction->setUserPoster($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCorrection(Correction $correction): self
+    {
+        if ($this->corrections->removeElement($correction)) {
+            // set the owning side to null (unless already changed)
+            if ($correction->getUserPoster() === $this) {
+                $correction->setUserPoster(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Correction[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Correction $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->addReviewer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Correction $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            $review->removeReviewer($this);
+        }
+
+        return $this;
     }
 }

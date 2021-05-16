@@ -53,6 +53,11 @@ class PostedSolution
      */
     private $mentorComment;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Correction::class, inversedBy="postedSolution")
+     */
+    private $correction;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -157,6 +162,18 @@ class PostedSolution
     public function setMentorComment(?string $mentorComment): self
     {
         $this->mentorComment = $mentorComment;
+
+        return $this;
+    }
+
+    public function getCorrection(): ?Correction
+    {
+        return $this->correction;
+    }
+
+    public function setCorrection(?Correction $correction): self
+    {
+        $this->correction = $correction;
 
         return $this;
     }
