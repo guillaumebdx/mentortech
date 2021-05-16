@@ -22,12 +22,12 @@
                     {% endif %}
                     {% for status in app.user.statusLessons %}
                         {% if lesson == status.lesson %}
-                            {% if status.isOpen %}
-                                <i title="Lecture en cours" class="material-icons">remove_red_eye</i>
+                            {% if status.isValid %}
+                                <i title="Solution validée" class="material-icons">check</i>
                             {% elseif status.isPosted %}
                                 <i title="Solution postée en attente" class="material-icons">hourglass_empty</i>
-                            {% elseif status.isValid %}
-                                <i title="Solution validée" class="material-icons">check</i>
+                            {% elseif status.isOpen %}
+                                <i title="Lecture en cours" class="material-icons">remove_red_eye</i>
                             {% endif %}
                         {% endif %}
                     {% endfor %}
