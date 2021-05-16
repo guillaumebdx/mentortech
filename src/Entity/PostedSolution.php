@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostedSolutionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,9 +56,14 @@ class PostedSolution
     private $mentorComment;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Correction::class, inversedBy="postedSolution")
+     * @ORM\OneToMany(targetEntity=Correction::class, mappedBy="postedSolution")
      */
-    private $correction;
+    private $corrections;
+
+    public function __construct()
+    {
+        $this->corrections = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,14 +173,32 @@ class PostedSolution
         return $this;
     }
 
-    public function getCorrection(): ?Correction
+    /**
+     * @return Collection|Correction[]
+     */
+    public function getCorrections(): Collection
     {
-        return $this->correction;
+        return $this->corrections;
     }
 
-    public function setCorrection(?Correction $correction): self
+    public function addCorrection(Correction $correction): self
     {
-        $this->correction = $correction;
+        if (!$this->corrections->contains($correction)) {
+            $this->corrections[] = $correction;
+            $correction->setPostedSolution($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCorrection(Correction $correction): self
+    {
+        if ($this->corrections->removeElement($correction)) {
+            // set the owning side to null (unless already changed)
+            if ($correction->getPostedSolution() === $this) {
+                $correction->setPostedSolution(null);
+            }
+        }
 
         return $this;
     }

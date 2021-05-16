@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CorrectionRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Correction
 {
@@ -39,21 +40,17 @@ class Correction
      */
     private $updatedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PostedSolution::class, mappedBy="correction")
-     */
-    private $postedSolution;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviews")
      */
     private $reviewer;
 
-    public function __construct()
-    {
-        $this->postedSolution = new ArrayCollection();
-        $this->reviewer = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity=PostedSolution::class, inversedBy="corrections")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $postedSolution;
 
     public function getId(): ?int
     {
@@ -109,55 +106,44 @@ class Correction
     }
 
     /**
-     * @return Collection|PostedSolution[]
+     * Gets triggered only on insert
+     * @ORM\PrePersist
      */
-    public function getPostedSolution(): Collection
+    public function onPrePersist()
     {
-        return $this->postedSolution;
-    }
-
-    public function addPostedSolution(PostedSolution $postedSolution): self
-    {
-        if (!$this->postedSolution->contains($postedSolution)) {
-            $this->postedSolution[] = $postedSolution;
-            $postedSolution->setCorrection($this);
-        }
-
-        return $this;
-    }
-
-    public function removePostedSolution(PostedSolution $postedSolution): self
-    {
-        if ($this->postedSolution->removeElement($postedSolution)) {
-            // set the owning side to null (unless already changed)
-            if ($postedSolution->getCorrection() === $this) {
-                $postedSolution->setCorrection(null);
-            }
-        }
-
-        return $this;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
-     * @return Collection|User[]
+     * Gets triggered only on insert
+     * @ORM\PreUpdate()
      */
-    public function getReviewer(): Collection
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function getReviewer(): ?User
     {
         return $this->reviewer;
     }
 
-    public function addReviewer(User $reviewer): self
+    public function setReviewer(?User $reviewer): self
     {
-        if (!$this->reviewer->contains($reviewer)) {
-            $this->reviewer[] = $reviewer;
-        }
+        $this->reviewer = $reviewer;
 
         return $this;
     }
 
-    public function removeReviewer(User $reviewer): self
+    public function getPostedSolution(): ?PostedSolution
     {
-        $this->reviewer->removeElement($reviewer);
+        return $this->postedSolution;
+    }
+
+    public function setPostedSolution(?PostedSolution $postedSolution): self
+    {
+        $this->postedSolution = $postedSolution;
 
         return $this;
     }

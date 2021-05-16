@@ -10,7 +10,7 @@
             </a>
         </div></li>
     <li><a href="{{ path('program_all') }}" class="waves-effect"><i class="material-icons">collections_bookmark</i>Mes cours</a></li>
-    <li><a href="#!" class="waves-effect"><i class="material-icons">feedback</i>Correction en attente</a></li>
+    <li><a href="{{ path('correction_todo') }}" class="waves-effect"><i class="material-icons">feedback</i>Corriger mes pairs</a></li>
     <li><div class="divider"></div></li>
     <li><a class="subheader">Ressources</a></li>
     {% if is_granted('ROLE_ADMIN') %}

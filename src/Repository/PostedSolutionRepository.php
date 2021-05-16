@@ -19,6 +19,14 @@ class PostedSolutionRepository extends ServiceEntityRepository
         parent::__construct($registry, PostedSolution::class);
     }
 
+    public function getSolutionsToReview($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return PostedSolution[] Returns an array of PostedSolution objects
     //  */

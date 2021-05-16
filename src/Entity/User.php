@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    const ADMIN = 'ROLE_ADMIN';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -75,12 +76,7 @@ class User implements UserInterface
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Correction::class, mappedBy="userPoster")
-     */
-    private $corrections;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Correction::class, mappedBy="reviewer")
+     * @ORM\OneToMany(targetEntity=Correction::class, mappedBy="reviewer")
      */
     private $reviews;
 
@@ -89,7 +85,6 @@ class User implements UserInterface
         $this->attributions = new ArrayCollection();
         $this->statusLessons = new ArrayCollection();
         $this->postedSolutions = new ArrayCollection();
-        $this->corrections = new ArrayCollection();
         $this->reviews = new ArrayCollection();
     }
 
@@ -334,36 +329,6 @@ class User implements UserInterface
     /**
      * @return Collection|Correction[]
      */
-    public function getCorrections(): Collection
-    {
-        return $this->corrections;
-    }
-
-    public function addCorrection(Correction $correction): self
-    {
-        if (!$this->corrections->contains($correction)) {
-            $this->corrections[] = $correction;
-            $correction->setUserPoster($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCorrection(Correction $correction): self
-    {
-        if ($this->corrections->removeElement($correction)) {
-            // set the owning side to null (unless already changed)
-            if ($correction->getUserPoster() === $this) {
-                $correction->setUserPoster(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Correction[]
-     */
     public function getReviews(): Collection
     {
         return $this->reviews;
@@ -373,7 +338,7 @@ class User implements UserInterface
     {
         if (!$this->reviews->contains($review)) {
             $this->reviews[] = $review;
-            $review->addReviewer($this);
+            $review->setReviewer($this);
         }
 
         return $this;
@@ -382,7 +347,10 @@ class User implements UserInterface
     public function removeReview(Correction $review): self
     {
         if ($this->reviews->removeElement($review)) {
-            $review->removeReviewer($this);
+            // set the owning side to null (unless already changed)
+            if ($review->getReviewer() === $this) {
+                $review->setReviewer(null);
+            }
         }
 
         return $this;
