@@ -74,6 +74,7 @@ class LessonController extends AbstractController
             $entityManager->persist($statusLesson);
             $entityManager->persist($postedSolution);
             $entityManager->flush();
+            $this->addFlash('green', 'Votre solution a bien été postée');
             return $this->redirectToRoute('home');
         }
         return $this->render('lesson/final.html.twig', [

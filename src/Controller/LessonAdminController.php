@@ -115,6 +115,7 @@ class LessonAdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($content);
             $entityManager->flush();
+            $this->addFlash('green', 'La leçon a bien été postée');
             return $this->redirectToRoute('home');
         }
         return $this->render('lesson_admin/final.html.twig', [

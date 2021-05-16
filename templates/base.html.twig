@@ -22,6 +22,17 @@
             {% include 'component/_sidebar.html.twig' %}
         {% endif %}
     {% endblock %}
+    {% for category, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="container">
+                <div class="row">
+                    <div class="card-panel {{ category}} white-text">
+                        {{ message }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
     {% block body %}{% endblock %}
     </body>
 </html>

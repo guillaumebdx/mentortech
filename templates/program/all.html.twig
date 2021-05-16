@@ -19,6 +19,7 @@
                             <p>{{ attribution.program.description }}</p>
                         </div>
                         <div class="card-action">
+                            {{ attribution.program.lessons|length }} cours <br>
                             Fin le {{ attribution.endAt|date('d/m/Y') }}
                         </div>
                     </div>

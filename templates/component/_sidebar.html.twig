@@ -3,9 +3,11 @@
             <div class="background">
                 <img src="http://di262mgurvkjm.cloudfront.net/80d95a4d-a9a5-4b1a-af66-6eaddeed761b/constellation-grande-ourse-eptite-ourse-etoile-polaire_uxga.jpg">
             </div>
-            <a href="#user"><img class="circle" src="https://github.com/{{ app.user.githubName ?? 'github'  }}.png?size=100"></a>
-            <a href="#name"><span class="white-text name">{{ app.user.email }}</span></a>
-            <a href="#"><span class="white-text">Étudiant</span></a>
+            <a href="{{ path('user_index') }}">
+                <img class="circle" src="https://github.com/{{ app.user.githubName ?? 'github'  }}.png?size=100">
+                <span class="white-text name">{{ app.user.email }}</span>
+                <span class="white-text">Étudiant</span>
+            </a>
         </div></li>
     <li><a href="{{ path('program_all') }}" class="waves-effect"><i class="material-icons">collections_bookmark</i>Mes cours</a></li>
     <li><a href="#!" class="waves-effect"><i class="material-icons">feedback</i>Correction en attente</a></li>
@@ -14,5 +16,6 @@
     {% if is_granted('ROLE_ADMIN') %}
         <li><a class="waves-effect" href="{{ path('lesson_new') }}">Nouveau cours</a></li>
         <li><a class="waves-effect" href="{{ path('lesson_solution_all') }}">Correction en attente</a></li>
+        <li><a class="waves-effect" href="{{ path('attribution') }}">Attribuer un programe</a></li>
     {% endif %}
 </ul>
