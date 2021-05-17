@@ -8,7 +8,7 @@
             <div class="col s12">
                 <ul class="collection with-header">
                     <li class="collection-header"><h5>Mes solutions</h5></li>
-                    {% for postedSolution in app.user.postedSolutions %}
+                    {% for postedSolution in app.user.postedSolutions|reverse %}
                         <li class="collection-item">
                             <div>
                                 <p>{{ postedSolution.lesson.name}}</p>
@@ -60,9 +60,6 @@
                     {% else %}
                         <li>
                             Aucune solution postée pour le moment
-                        </li>
-                        <li>
-                            Vous ne pouvez corriger que des exercices que vous avez vous-mêmes terminés
                         </li>
                     {% endfor %}
                 </ul>
