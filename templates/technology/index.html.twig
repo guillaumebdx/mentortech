@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TechnologyController!{% endblock %}
+{% block title %}
+    {{ parent() }} - Nouvelle techno
+{% endblock %}
 
 {% block body %}
     {% form_theme form 'themes/materialize_theme.html.twig' %}

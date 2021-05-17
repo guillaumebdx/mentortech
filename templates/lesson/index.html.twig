@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+    {{ parent() }} - Introduction du cours
+{% endblock %}
 {% block body %}
     {% include 'lesson/_breadcrumb_lesson.html.twig' %}
     <div class="container">
