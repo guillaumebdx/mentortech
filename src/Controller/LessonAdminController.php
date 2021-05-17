@@ -124,14 +124,6 @@ class LessonAdminController extends AbstractController
     }
 
     /**
-     * @Route("/all", name="all")
-     */
-    public function all(LessonRepository $lessonRepository)
-    {
-        dd($lessonRepository->findAll());
-    }
-
-    /**
      * @Route("/solution/all", name="solution_all")
      */
     public function status(PostedSolutionRepository $postedSolutionRepository)

@@ -7,6 +7,7 @@ use App\Entity\Part;
 use App\Entity\PostedSolution;
 use App\Entity\StatusLesson;
 use App\Form\PostedSolutionType;
+use App\Repository\AttributionRepository;
 use App\Repository\StatusLessonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +23,12 @@ class LessonController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      */
-    public function index(Lesson $lesson): Response
+    public function index(Lesson $lesson, AttributionRepository  $attributionRepository): Response
     {
+        if (!$this->hasAccess($lesson, $attributionRepository)) {
+            $this->addFlash('red', 'Vous n\'avez pas accés à ce programe');
+            return $this->redirectToRoute('program_all');
+        }
         return $this->render('lesson/index.html.twig', [
             'lesson' => $lesson,
         ]);
@@ -34,9 +39,14 @@ class LessonController extends AbstractController
      */
     public function part(Part $part,
                          StatusLessonRepository $statusLessonRepository,
-                         EntityManagerInterface $entityManager)
+                         EntityManagerInterface $entityManager,
+                         AttributionRepository $attributionRepository)
     {
         $lesson = $part->getContent()->getLesson();
+        if (!$this->hasAccess($lesson, $attributionRepository)) {
+            $this->addFlash('red', 'Vous n\'avez pas accés à ce programe');
+            return $this->redirectToRoute('program_all');
+        }
         $user   = $this->getUser();
         if (!$statusLessonRepository->findBy(['user' => $user, 'lesson' => $lesson])) {
             $statusLesson = new StatusLesson();
@@ -85,5 +95,20 @@ class LessonController extends AbstractController
             'lesson' => $lesson,
             'form'   => $form->createView(),
         ]);
+    }
+
+    private function hasAccess($lesson, AttributionRepository $attributionRepository)
+    {
+        $userProgram = null;
+        $result = true;
+        foreach ($lesson->getPrograms() as $program) {
+            $userProgram = $attributionRepository->findOneBy([
+                'user' => $this->getUser(),
+                'program' => $program]);
+        }
+        if (!$userProgram) {
+            $result = false;
+        }
+        return $result;
     }
 }

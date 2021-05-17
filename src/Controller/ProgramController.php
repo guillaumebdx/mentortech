@@ -51,15 +51,21 @@ class ProgramController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      */
-    public function show(Program $program,
-                         ProgramRepository $programRepository)
+    public function show(Program $program, AttributionRepository $attributionRepository)
     {
+        $userProgram = $attributionRepository->findOneBy([
+            'user' => $this->getUser(),
+            'program' => $program]);
+        if (!$userProgram) {
+            $this->addFlash('red', 'Vous n\'avez pas accés à ce programe');
+            return $this->redirectToRoute('program_all');
+        }
         $ownByUserLessons = [];
         foreach ($this->getUser()->getStatusLessons() as $statusLesson) {
             $ownByUserLessons[] = $statusLesson->getLesson();
         }
         return $this->render('program/show.html.twig', [
-            'program'          => $programRepository->find($program),
+            'program'          => $program,
             'ownByUserLessons' => $ownByUserLessons,
         ]);
     }
