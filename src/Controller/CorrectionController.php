@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Correction;
 use App\Entity\PostedSolution;
 use App\Entity\User;
+use App\Form\ContentFinalType;
 use App\Form\CorrectionType;
 use App\Form\MentorType;
+use App\Form\PostedSolutionType;
 use App\Repository\CorrectionRepository;
 use App\Repository\PostedSolutionRepository;
 use App\Repository\StatusLessonRepository;
@@ -57,7 +59,7 @@ class CorrectionController extends AbstractController
             $entityManager->persist($correction);
             $this->getUser()->setCredit($this->getUser()->getCredit() + 10);
             $entityManager->flush();
-            $this->addFlash('green', 'Votre correction a bien été prise en compte. Vous avez gagné 1 crédit !');
+            $this->addFlash('green', 'Votre correction a bien été prise en compte. Vous avez gagné 10 crédit !');
             return $this->redirectToRoute('home');
         }
         return $this->render('correction/apply.html.twig', [
@@ -91,5 +93,33 @@ class CorrectionController extends AbstractController
             'form' => $form->createView(),
             'postedSolution' => $postedSolution,
         ]);;
+    }
+
+    /**
+     * @Route("/self", name="self")
+     */
+    public function self()
+    {
+        return $this->render('correction/self.html.twig');
+    }
+
+    /**
+     * @Route("/update-solution/{id}", name="update_solution")
+     */
+    public function updateSolution(PostedSolution $postedSolution,
+                                   Request $request,
+                                   EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(PostedSolutionType::class, $postedSolution);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($postedSolution);
+            $entityManager->flush();
+            return $this->redirectToRoute('correction_self');
+        }
+        return $this->render('correction/update_solution.html.twig', [
+            'form' => $form->createView(),
+            'posted_solution' => $postedSolution,
+        ]);
     }
 }

@@ -16,7 +16,8 @@ class CorrectionType extends AbstractType
         $builder
             ->add('comment', TextareaType::class)
             ->add('isValid', CheckboxType::class, [
-                'label' => 'Je valide cette correction'
+                'label' => 'Je valide cette correction',
+                'required' => false,
             ])
         ;
     }

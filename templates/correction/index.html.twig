@@ -14,7 +14,7 @@
                             <img class="circle" src="https://github.com/{{ solution.user.githubName ?? 'github'  }}.png?size=100">
                             <span class="title">{{ postedSolution.user.email }}</span>
                             <p>{{ postedSolution.lesson.name}}</p>
-                            <p>{{ postedSolution.corrections|length }} correction de pair réalisé</p>
+                            <p>{{ postedSolution.corrections|length }} correction(s) de pair réalisée(s)</p>
                             {% if postedSolution.isValid %}
                                 <span class="round green lighten-2">
                                 Approuvée par un mentor

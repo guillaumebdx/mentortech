@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProgramController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <a href="{{ posted_solution.url }}" target="_blank">Accéder à la solution</a>
+
+        {% form_theme form 'themes/materialize_theme.html.twig' %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="waves-effect waves-light btn">Je modifie ma solution !</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

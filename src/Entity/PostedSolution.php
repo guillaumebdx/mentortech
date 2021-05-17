@@ -6,6 +6,7 @@ use App\Repository\PostedSolutionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Michelf\MarkdownExtra;
 
 /**
  * @ORM\Entity(repositoryClass=PostedSolutionRepository::class)
@@ -161,9 +162,9 @@ class PostedSolution
         return $this;
     }
 
-    public function getMentorComment(): ?string
+    public function getMentorComment($withMarkdown = true): ?string
     {
-        return $this->mentorComment;
+        return $withMarkdown ? MarkdownExtra::defaultTransform($this->mentorComment) : $this->mentorComment;
     }
 
     public function setMentorComment(?string $mentorComment): self

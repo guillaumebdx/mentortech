@@ -6,6 +6,7 @@ use App\Repository\CorrectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Michelf\MarkdownExtra;
 
 /**
  * @ORM\Entity(repositoryClass=CorrectionRepository::class)
@@ -57,9 +58,9 @@ class Correction
         return $this->id;
     }
 
-    public function getComment(): ?string
+    public function getComment($withMarkdown = true): ?string
     {
-        return $this->comment;
+        return $withMarkdown ? MarkdownExtra::defaultTransform($this->comment) : $this->comment;
     }
 
     public function setComment(string $comment): self
