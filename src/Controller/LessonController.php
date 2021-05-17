@@ -69,6 +69,10 @@ class LessonController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $statusLesson = $statusLessonRepository->findOneBy(['user' => $this->getUser(), 'lesson' => $lesson]);
+            if (!$statusLesson) {
+                $this->addFlash('red', 'Vous ne pouvez pas poster une solution si vous n\'avez pas lu les parties');
+                return $this->redirectToRoute('lesson_final', ['id' => $lesson->getId()]);
+            }
             $statusLesson->setIsPosted(true);
             $statusLesson->setIsOpen(false);
             $entityManager->persist($statusLesson);
