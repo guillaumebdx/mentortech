@@ -162,9 +162,14 @@ class PostedSolution
         return $this;
     }
 
-    public function getMentorComment($withMarkdown = true): ?string
+    public function getMentorComment(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->mentorComment) : $this->mentorComment;
+        return $this->mentorComment;
+    }
+
+    public function getMentorCommentMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->mentorComment);
     }
 
     public function setMentorComment(?string $mentorComment): self

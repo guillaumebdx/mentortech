@@ -30,7 +30,7 @@
                                             {% else %}
                                                 <h4 class="red-text">Solution non validée <i class="material-icons">clear</i></h4>
                                             {% endif %}
-                                            {{ correction.comment|raw }}
+                                            {{ correction.commentMd|raw }}
                                         </div>
                                         <div class="modal-footer">
                                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
@@ -46,7 +46,7 @@
                                     <div id="mentor" class="modal">
                                         <div class="modal-content">
                                             <h4 class="green-text">Solution validée <i class="material-icons">check</i></h4>
-                                            {{ postedSolution.mentorComment|raw }}
+                                            {{ postedSolution.mentorCommentMd|raw }}
                                         </div>
                                         <div class="modal-footer">
                                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>

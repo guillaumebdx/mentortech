@@ -6,7 +6,7 @@
     {% include 'lesson/_breadcrumb_lesson.html.twig' %}
     <div class="container">
         <h2>📖 Introduction du cours</h2>
-        {{ lesson.content.introduction|raw }}
+        {{ lesson.content.introductionMd|raw }}
 
         <a href="{{ path('lesson_part', {id: lesson.content.parts[0].id}) }}" class="waves-effect waves-light btn-large">
             <i class="material-icons right">

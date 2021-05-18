@@ -7,8 +7,8 @@
     <div class="container">
         <div class="lesson">
         <h2>📖 Introduction</h2>
-        {{ part.introduction|raw }}
-        {{ part.description|raw }}
+        {{ part.introductionMd|raw }}
+        {{ part.descriptionMd|raw }}
         <h2>🎞️ Live coding</h2>
         {% for screencast in part.screencasts %}
             <h5>{{ screencast.title }}</h5>
@@ -17,13 +17,13 @@
             </div>
         {% endfor %}
         <h2>💪 Exercice</h2>
-        {{ part.exercise|raw }}
+        {{ part.exerciseMd|raw }}
 
         <ul class="collapsible solution-list">
             <li>
                 <div class="collapsible-header"><i class="material-icons">lightbulb_outline</i>Solution</div>
                 <div class="collapsible-body">
-                    {{ part.solution|raw }}
+                    {{ part.solutionMd|raw }}
                 </div>
             </li>
         </ul>

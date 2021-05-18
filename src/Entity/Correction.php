@@ -58,9 +58,14 @@ class Correction
         return $this->id;
     }
 
-    public function getComment($withMarkdown = true): ?string
+    public function getComment(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->comment) : $this->comment;
+        return $this->comment;
+    }
+
+    public function getCommentMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->comment);
     }
 
     public function setComment(string $comment): self

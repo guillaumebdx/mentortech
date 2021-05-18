@@ -90,9 +90,14 @@ class Content
         return $this;
     }
 
-    public function getIntroduction($withMarkdown = true): ?string
+    public function getIntroduction(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->introduction) : $this->introduction;
+        return $this->introduction;
+    }
+
+    public function getIntroductionMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->introduction);
     }
 
     public function setIntroduction(?string $introduction): self
@@ -132,9 +137,14 @@ class Content
         return $this;
     }
 
-    public function getFinalExercise($withMarkdown = true): ?string
+    public function getFinalExercise(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->finalExercise) : $this->finalExercise;
+        return $this->finalExercise;
+    }
+
+    public function getFinalExerciseMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->finalExercise);
     }
 
     public function setFinalExercise(?string $finalExercise): self

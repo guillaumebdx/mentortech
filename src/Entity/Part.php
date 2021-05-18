@@ -65,9 +65,14 @@ class Part
         return $this->id;
     }
 
-    public function getIntroduction($withMarkdown = true): ?string
+    public function getIntroduction(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->introduction) : $this->introduction;
+        return $this->introduction;
+    }
+
+    public function getIntroductionMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->introduction);
     }
 
     public function setIntroduction(?string $introduction): self
@@ -77,9 +82,14 @@ class Part
         return $this;
     }
 
-    public function getDescription($withMarkdown = true): ?string
+    public function getDescription(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->description) : $this->description;
+        return $this->description;
+    }
+
+    public function getDescriptionMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->description);
     }
 
     public function setDescription(string $description): self
@@ -89,9 +99,14 @@ class Part
         return $this;
     }
 
-    public function getExercise($withMarkdown = true): ?string
+    public function getExercise(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->exercise) : $this->exercise;
+        return $this->exercise;
+    }
+
+    public function getExerciseMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->exercise);
     }
 
     public function setExercise(?string $exercise): self
@@ -101,9 +116,14 @@ class Part
         return $this;
     }
 
-    public function getSolution($withMarkdown = true): ?string
+    public function getSolution(): ?string
     {
-        return $withMarkdown ? MarkdownExtra::defaultTransform($this->solution) : $this->solution;
+        return $this->solution;
+    }
+
+    public function getSolutionMd(): ?string
+    {
+        return MarkdownExtra::defaultTransform($this->solution);
     }
 
     public function setSolution(?string $solution): self
