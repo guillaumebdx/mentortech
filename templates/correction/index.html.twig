@@ -13,8 +13,8 @@
                 {% for postedSolution in postedSolutions %}
                     <li class="collection-item avatar">
                         <div>
-                            <img class="circle" src="https://github.com/{{ solution.user.githubName ?? 'github'  }}.png?size=100">
-                            <span class="title">{{ postedSolution.user.email }}</span>
+                            <img class="circle" src="https://github.com/{{ postedSolution.user.githubName ?? 'github'  }}.png?size=100">
+                            <span class="title text-bold">{{ postedSolution.user.pseudo }}</span>
                             <p>{{ postedSolution.lesson.name}}</p>
                             <p>{{ postedSolution.corrections|length }} correction(s) de pair réalisée(s)</p>
                             {% if postedSolution.isValid %}

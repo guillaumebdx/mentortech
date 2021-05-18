@@ -18,7 +18,8 @@
                                 {% for correction in postedSolution.corrections %}
                                     <p class="center-align">
                                         <a class="modal-trigger" href="#correction-{{ correction.id }}">
-                                            <img class="circle" src="https://github.com/{{ solution.user.githubName ?? 'github'  }}.png?size=50">
+                                            <img class="circle" src="https://github.com/{{ correction.reviewer.githubName ?? 'github'  }}.png?size=50">
+                                            {{ correction.reviewer.pseudo }}
                                             <br>
                                             Voir
                                         </a>

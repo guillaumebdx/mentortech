@@ -10,6 +10,8 @@
             <div class="col s12 m6">
                 <div class="center text-bold">
                     {{ app.user.email }}
+                    <br>
+                    {{ app.user.pseudo }}
                 </div>
                 <div class="center">
                     <img class="circle" src="https://github.com/{{ app.user.githubName ?? 'github'  }}.png?size=100">

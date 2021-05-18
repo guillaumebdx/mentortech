@@ -11,7 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="email déjà inscrit")
+ * @UniqueEntity(fields={"pseudo"}, message="pseudo non disponible")
  * @ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface
@@ -80,6 +81,11 @@ class User implements UserInterface
      */
     private $reviews;
 
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $pseudo;
+
     public function __construct()
     {
         $this->attributions = new ArrayCollection();
@@ -114,6 +120,23 @@ class User implements UserInterface
     {
         return (string) $this->email;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * @param mixed $pseudo
+     */
+    public function setPseudo($pseudo): void
+    {
+        $this->pseudo = $pseudo;
+    }
+
 
     /**
      * @see UserInterface
@@ -352,6 +375,13 @@ class User implements UserInterface
                 $review->setReviewer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }

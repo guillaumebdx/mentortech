@@ -6,6 +6,8 @@
             <a href="{{ path('user_index') }}">
                 <img class="circle" src="https://github.com/{{ app.user.githubName ?? 'github'  }}.png?size=100">
                 <span class="white-text name">{{ app.user.email }}</span>
+                <span class="white-text name">{{ app.user.pseudo }}</span>
+
                 <span class="white-text">{{ is_granted('ROLE_ADMIN') ? 'Admin' : 'Étudiant' }}</span>
             </a>
         </div></li>
