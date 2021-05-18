@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/lesson", name="lesson_")
+ * Route secured in security.yaml
  */
 class LessonAdminController extends AbstractController
 {
@@ -130,6 +131,74 @@ class LessonAdminController extends AbstractController
     {
         return $this->render('lesson_admin/status_all.html.twig', [
             'posted_solutions' => $postedSolutionRepository->findBy(['isValid' => false]),
+        ]);
+    }
+
+    /**
+     * @Route("/all", name="all")
+     */
+    public function all(LessonRepository $lessonRepository)
+    {
+        return $this->render('lesson_admin/all.html.twig', [
+            'lessons' => $lessonRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/update-intro/{id}", name="update_intro")
+     */
+    public function updateIntro(Content $content, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(ContentType::class, $content);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($content);
+            $entityManager->flush();
+            $this->addFlash('green', 'Intro mise à jour');
+            return $this->redirectToRoute('lesson_all');
+        }
+
+        return $this->render('component/generic_form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/update-final/{id}", name="update_final")
+     */
+    public function updateFinal(Content $content, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(ContentFinalType::class, $content);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($content);
+            $entityManager->flush();
+            $this->addFlash('green', 'Final mis à jour');
+            return $this->redirectToRoute('lesson_all');
+        }
+
+        return $this->render('component/generic_form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/update-part/{id}", name="update_part")
+     */
+    public function updatePart(Part $part, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(PartType::class, $part);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($part);
+            $entityManager->flush();
+            $this->addFlash('green', 'Partie mise à jour');
+            return $this->redirectToRoute('lesson_all');
+        }
+        return $this->render('component/generic_form.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }
