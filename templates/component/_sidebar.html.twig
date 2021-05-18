@@ -16,7 +16,7 @@
     <li><a class="subheader">Ressources</a></li>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <li><a class="waves-effect" href="{{ path('lesson_new') }}">Nouveau cours</a></li>
+        <li><a class="waves-effect" href="{{ path('lesson_all') }}">Mettre à jour un cours</a></li>
         <li><a class="waves-effect" href="{{ path('lesson_solution_all') }}">Correction en attente</a></li>
         <li><a class="waves-effect" href="{{ path('attribution') }}">Attribuer un programe</a></li>
         <li><a class="waves-effect" href="{{ path('program_new') }}">créer un programe</a></li>
