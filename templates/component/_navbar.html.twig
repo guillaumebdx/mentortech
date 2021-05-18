@@ -1,3 +1,4 @@
+<div class="navbar-fixed">
 <nav class="light-blue lighten-1 main-nav">
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <a href="#" data-target="slide-out" class="sidenav-trigger {{ app.request.attributes.get('_route') == 'home' ? 'btn pulse light-blue lighten-1' : '' }}"><i class="material-icons">menu</i></a>
@@ -23,3 +24,4 @@
         </ul>
     </div>
 </nav>
+</div>

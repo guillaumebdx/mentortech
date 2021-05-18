@@ -1,12 +1,16 @@
-<div class="nav-lesson">
+<div class="nav-lesson navbar-fixed">
     <nav>
         <div class="nav-wrapper orange lighten-1 breadcrumb-lesson">
             <div class="col s12">
-                <a href="{{ path('lesson_show', {id: lesson.id}) }}" class="breadcrumb">Introduction</a>
+                <a href="{{ path('lesson_show', {id: lesson.id}) }}" class="breadcrumb {{ app.request.attributes.get('_route') == 'lesson_show' ? 'white-text text-bold' : '' }}">Introduction</a>
                 {% for part in lesson.content.parts %}
-                    <a href="{{ path('lesson_part', {id: part.id}) }}" class="breadcrumb">{{ loop.index }} - {{ part.title }}</a>
+                    {% if app.request.attributes.get('_route_params').id == part.id and app.request.attributes.get('_route') == 'lesson_part' %}
+                    <a href="{{ path('lesson_part', {id: part.id}) }}" class="breadcrumb white-text text-bold">{{ loop.index }} - {{ part.title }}</a>
+                    {% else %}
+                        <a href="{{ path('lesson_part', {id: part.id}) }}" class="breadcrumb">{{ loop.index }} - {{ part.title }}</a>
+                    {% endif %}
                 {% endfor %}
-                <a href="{{ path('lesson_final', {id: lesson.id}) }}" class="breadcrumb">Exercice final</a>
+                <a href="{{ path('lesson_final', {id: lesson.id}) }}" class="breadcrumb {{ app.request.attributes.get('_route') == 'lesson_final' ? 'white-text text-bold' : '' }}">Exercice final</a>
             </div>
         </div>
     </nav>

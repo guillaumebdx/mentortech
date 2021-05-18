@@ -6,7 +6,8 @@
     {% include 'lesson/_breadcrumb_lesson.html.twig' %}
     <div class="container">
         <div class="lesson">
-        <h2>📖 Introduction</h2>
+            <h2>💡 {{ part.title }}</h2>
+            <h2>📖 Introduction</h2>
         {{ part.introductionMd|raw }}
             <h2>📚 Contenu</h2>
         {{ part.descriptionMd|raw }}
