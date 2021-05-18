@@ -1,5 +1,8 @@
 .container {
   .lesson {
+    img {
+      max-width: 70vw;
+    }
     li {
       list-style-type: disclosure-closed;
     }
