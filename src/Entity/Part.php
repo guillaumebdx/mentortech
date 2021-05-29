@@ -186,4 +186,18 @@ class Part
 
         return $this;
     }
+
+    public function getPreviousPart()
+    {
+        $parts = $this->content->getParts();
+        $ownPosition = array_search($this, $parts->toArray());
+        return $parts[$ownPosition -1];
+    }
+
+    public function getNextPart()
+    {
+        $parts = $this->content->getParts();
+        $ownPosition = array_search($this, $parts->toArray());
+        return $parts[$ownPosition +1];
+    }
 }

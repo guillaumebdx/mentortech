@@ -20,7 +20,6 @@
         {% endfor %}
         <h2>💪 Exercice</h2>
         {{ part.exerciseMd|raw }}
-
         <ul class="collapsible solution-list">
             <li>
                 <div class="collapsible-header"><i class="material-icons">lightbulb_outline</i>Solution</div>
@@ -29,7 +28,16 @@
                 </div>
             </li>
         </ul>
-
+            <div class="center-align">
+                {% if part.previousPart %}
+                    <a href="{{ path('lesson_part', {id: part.previousPart.id}) }}" class="waves-effect waves-light btn"><i class="material-icons left">keyboard_arrow_left</i>Partie précédente</a>
+                {% endif %}
+                {% if part.nextPart %}
+                    <a href="{{ path('lesson_part', {id: part.nextPart.id}) }}" class="waves-effect waves-light btn"><i class="material-icons right">keyboard_arrow_right</i>Partie Suivante</a>
+                {% else %}
+                    <a href="{{ path('lesson_final', {id: lesson.id}) }}" class="waves-effect waves-light btn"><i class="material-icons right">wb_sunny</i>Exercice final</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
