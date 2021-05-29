@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <ul class="collection with-header">
+            <li class="collection-header">
+                <h4>Corrections</h4>
+            </li>
+            {% for correction in corrections %}
+                <li class="collection-item avatar">
+                    <div>
+                        {% if correction.isValid %}
+                            <i class="material-icons medium green-text">check</i>
+                        {% else %}
+                            <i class="material-icons medium green">thumb_down</i>
+                        {% endif %}
+                        <img class="circle" src="https://github.com/{{ correction.reviewer.githubName ?? 'github'  }}.png?size=100">
+                        <br><span> Review de {{ correction.postedSolution.user.pseudo }} par {{ correction.reviewer.pseudo }} le {{ correction.createdAt|date('d/m/Y à H:i')  }}</span>
+                        <a class="secondary-content modal-trigger" href="#correction-{{ correction.id }}">
+                            <i class="material-icons">center_focus_weak</i>
+                        </a>
+                        <div id="correction-{{ correction.id }}" class="modal">
+                            <div class="modal-content">
+                                <h4 class="green-text">Correction</h4>
+                                <div>
+                                    Solution proposée : <a target="_blank" href="{{ correction.postedSolution.url }}">Voir</a>
+                                </div>
+                                <div>
+                                    Correction :
+                                    {{ correction.commentMd|raw }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <ul class="collection with-header">
+            <li class="collection-header">
+                <h4>Status</h4>
+            </li>
+            {% for status in status_lessons %}
+                <li class="collection-item avatar">
+                    <img class="circle" src="https://github.com/{{ status.user.githubName ?? 'github'  }}.png?size=100">
+                    <br>
+                    {{ status.user.pseudo }}
+                     - {{ status.lesson.name }} <br>
+                    {% if status.createdAt %}
+                        leçon lancée le {{ status.createdAt|date('d/m/Y à H:i') }}
+                    {% endif %}
+                    {% if status.updatedAt %}
+                        <br>
+                        nouveau status le {{ status.updatedAt|date('d/m/Y à H:i') }}
+                    {% endif %}
+                    <br>
+                    <span class="secondary-content">
+                        {% if status.isOpen %}
+                            <i title="Lecture en cours" class="material-icons">remove_red_eye</i>
+                        {% elseif status.isValid %}
+                            <i class="material-icons green-text">check</i>
+                        {% elseif status.isPosted %}
+                            <i class="material-icons">hourglass_empty</i>
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

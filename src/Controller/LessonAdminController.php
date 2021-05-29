@@ -10,6 +10,7 @@ use App\Form\ContentFinalType;
 use App\Form\ContentType;
 use App\Form\LessonType;
 use App\Form\PartType;
+use App\Repository\CorrectionRepository;
 use App\Repository\LessonRepository;
 use App\Repository\PostedSolutionRepository;
 use App\Repository\StatusLessonRepository;
@@ -199,6 +200,19 @@ class LessonAdminController extends AbstractController
         }
         return $this->render('component/generic_form.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/news", name="news")
+     */
+    public function news(CorrectionRepository $correctionRepository,
+                         StatusLessonRepository $statusLessonRepository)
+    {
+        return $this->render('lesson_admin/news.html.twig', [
+            'corrections' => $correctionRepository->findBy([], ['id' => 'desc']),
+            'status_lessons' => $statusLessonRepository->findBy([], ['id' => 'desc']),
+
         ]);
     }
 }
