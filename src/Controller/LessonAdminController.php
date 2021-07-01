@@ -215,4 +215,14 @@ class LessonAdminController extends AbstractController
 
         ]);
     }
+
+    /**
+     * @Route("/remove/{id}", name="remove")
+     */
+    public function remove(Lesson $lesson, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($lesson);
+        $entityManager->flush();
+        return $this->redirectToRoute('lesson_all');
+    }
 }

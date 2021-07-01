@@ -46,7 +46,7 @@ class Part
     private $content;
 
     /**
-     * @ORM\OneToMany(targetEntity=Screencast::class, mappedBy="part", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Screencast::class, mappedBy="part", cascade={"persist", "remove"})
      */
     private $screencasts;
 

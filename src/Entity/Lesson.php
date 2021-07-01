@@ -51,12 +51,12 @@ class Lesson
     private $content;
 
     /**
-     * @ORM\OneToMany(targetEntity=StatusLesson::class, mappedBy="lesson")
+     * @ORM\OneToMany(targetEntity=StatusLesson::class, mappedBy="lesson", cascade="remove")
      */
     private $statusLessons;
 
     /**
-     * @ORM\OneToMany(targetEntity=PostedSolution::class, mappedBy="lesson")
+     * @ORM\OneToMany(targetEntity=PostedSolution::class, mappedBy="lesson", cascade="remove")
      */
     private $postedSolutions;
 

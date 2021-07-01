@@ -13,6 +13,7 @@
                                 <a href="{{ path('lesson_update_part', {id: part.id}) }}"><i class="material-icons tiny">create</i> Partie {{ loop.index }} {{ part.title }}</a> -
                                 {% endfor %}
                                 <a href="{{ path('lesson_update_final', {id: lesson.content.id}) }}"><i class="material-icons tiny">create</i> final</a>
+                                <a href="{{ path('lesson_remove', {id: lesson.id}) }}" class="btn">Suppr</a>
                             </div>
                         </li>
                     {% endfor %}

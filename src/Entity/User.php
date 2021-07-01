@@ -341,7 +341,7 @@ class User implements UserInterface
     }
 
     /**
-     * Gets triggered only on insert
+     * Gets triggered only on update
      * @ORM\PreUpdate()
      */
     public function onPreUpdate()

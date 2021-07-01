@@ -37,7 +37,7 @@ class Content
     private $introduction;
 
     /**
-     * @ORM\OneToMany(targetEntity=Part::class, mappedBy="content")
+     * @ORM\OneToMany(targetEntity=Part::class, mappedBy="content", cascade="remove")
      */
     private $parts;
 
